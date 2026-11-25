@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Exchange Portal</title>
+
+  <style>
+    /* ---------- Basic page setup ---------- */
+    * { box-sizing: border-box; }               /* padding/border stay inside the width */
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #F8FAFC;                /* dominant: alabaster off-white */
+      color: #0F172A;                           /* charcoal ink text */
+      line-height: 1.6;
+    }
+    h1, h2, h3 { color: #172554; margin-top: 0; }
+
+    /* ---------- Header and navigation ---------- */
+    header {
+      background-color: #1E3A8A;                /* blue */
+      color: white;
+      padding: 12px 20px;
+      position: sticky;                         /* stays at top while scrolling */
+      top: 0;
+    }
+    header .logo { font-size: 22px; font-weight: bold; }
+    nav ul {
+      list-style: none;
+      margin: 8px 0 0 0;
+      padding: 0;
+      display: flex;                            /* puts links in a row */
+      flex-wrap: wrap;                          /* wraps on small screens */
+      gap: 6px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    nav a:hover { background-color: #172554; }
+
+    /* ---------- Sections ---------- */
+    main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+    section {
+      background-color: #F8FAFC;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      border: 1px solid #E2E8F0;
+    }
+    #home {
+      background-color: #172554;
+      color: white;
+      text-align: center;
+      padding: 60px 25px;
+    }
+    #home h1, #home h2 { color: white; font-size: 36px; }
+    #home p { max-width: 600px; margin: 0 auto 20px auto; }
+
+    /* ---------- Buttons ---------- */
+    button, .button-link {
+      background-color: #F97316;                /* accent: sunset orange (primary buttons only) */
+      color: #0F172A;
+      font-weight: bold;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    button:hover, .button-link:hover { background-color: #EA580C; }
+        .remove-button { background-color: #1E3A8A; color: white; }
+    .remove-button:hover { background-color: #172554; }
+    .saved-button, .saved-button:hover { background-color: #0F766E; color: white; cursor: default; }  /* green "Saved" state */
+
+    /* ---------- Program cards ---------- */
+    .card-container { display: flex; flex-wrap: wrap; gap: 20px; }
+    .card {
+      flex: 1 1 280px;                          /* grow, shrink, start at 280px */
+      background-color: white;
+      border: 1px solid #E2E8F0;
+      border-top: 5px solid #1E3A8A;
+      border-radius: 6px;
+      padding: 15px;
+    }
+    .card h3 { margin-bottom: 5px; }
+    .country { color: #475569; font-weight: bold; margin: 0 0 8px 0; }
+    .card button { margin-top: 8px; }
+
+    /* ---------- Lists, forms, tables ---------- */
+    ul.plain-list li { margin-bottom: 6px; }
+    .checklist label { display: block; padding: 8px; background-color: white; border: 1px solid #E2E8F0; margin-bottom: 6px; border-radius: 4px; }
+    form label { display: block; margin-top: 12px; font-weight: bold; }
+    form input[type="text"], form input[type="email"], form input[type="number"],
+    form input[type="date"], form select, form textarea {
+      width: 100%;
+      padding: 9px;
+      margin-top: 4px;
+      border: 1px solid #94a3b8;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+    form button { margin-top: 16px; }
+    .error { color: #b91c1c; font-size: 13px; display: block; min-height: 18px; }
+    .message { margin-top: 12px; font-weight: bold; color: #0F766E; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border: 1px solid #E2E8F0; text-align: left; }
+    th { background-color: #1E3A8A; color: white; }
+
+    /* Status badges */
+    .badge { padding: 3px 10px; border-radius: 12px; font-size: 13px; font-weight: bold; }
+    .Submitted { background-color: #E0E7FF; color: #1E3A8A; }
+    .UnderReview { background-color: #E2E8F0; color: #334155; }
+    .Approved { background-color: #CCFBF1; color: #0F766E; }
+
+    /* ---------- Login page ---------- */
+    #loginPage {
+      min-height: 100vh;
+      display: flex;                            /* centres the login box */
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .login-box {
+      background-color: white;
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+    }
+    .login-box h1 { text-align: center; font-size: 26px; margin-bottom: 8px; }
+    .login-box button { width: 100%; }
+    #loginForm input {
+      width: 100%;
+      padding: 9px;
+      margin-top: 4px;
+      border: 1px solid #94a3b8;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+    #website { display: none; }                 /* hidden until the student logs in */
+
+    footer { background-color: #172554; color: white; text-align: center; padding: 15px; }
+
+    /* ---------- Responsive: smaller screens ---------- */
+    @media (max-width: 600px) {
+      #home h1, #home h2 { font-size: 26px; }
+      section { padding: 15px; }
+      table { font-size: 13px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== LOGIN PAGE (shown first) ===== -->
+  <div id="loginPage">
+    <div class="login-box">
+      <h1>Student Exchange Portal Login</h1>
+      <p style="text-align:center;">Please enter your details to continue</p>
+      <form id="loginForm" onsubmit="return false">
+        <label for="loginName">Full Name</label>
+        <input type="text" id="loginName" placeholder="Enter your full name">
+        <span class="error" id="loginNameError"></span>
+
+        <label for="loginEmail">Email Address</label>
+        <input type="email" id="loginEmail" placeholder="student@example.com">
+        <span class="error" id="loginEmailError"></span>
+
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password (min 6 characters)">
+        <span class="error" id="loginPasswordError"></span>
+
+        <button type="button" onclick="login()">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== THE WEBSITE (hidden until login) ===== -->
+  <div id="website">
+
+  <!-- ===== HEADER with NAVIGATION BAR ===== -->
+  <header>
+    <div class="logo">Student Exchange Portal</div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#eligibility">Eligibility</a></li>
+        <li><a href="#checklist">Checklist</a></li>
+        <li><a href="#saved">Saved</a></li>
+        <li><a href="#apply">Apply</a></li>
+        <li><a href="#status">Status</a></li>
+        <li><a href="#admin">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===== 1. HOME ===== -->
+    <section id="home">
+      <h1>Welcome to the Student Exchange Portal</h1>
+      <p>
+        Study abroad for a semester! Explore exchange programs from universities around the world,
+        check if you are eligible, prepare your documents and track your application, all in one place.
+      </p>
+      <a href="#programs" class="button-link">Explore Exchange Programs</a>
+    </section>
+
+    <!-- ===== 2. EXCHANGE PROGRAMS (cards are created by JavaScript) ===== -->
+    <section id="programs">
+      <h2>Exchange Programs</h2>
+      <p>Click "Save Program" on any card to add it to your favourites.</p>
+      <div id="programContainer" class="card-container"></div>
+    </section>
+
+    <!-- ===== 3. ELIGIBILITY ===== -->
+    <section id="eligibility">
+      <h2>Eligibility and Requirements</h2>
+      <article>
+        <h3>General Criteria</h3>
+        <ul class="plain-list">
+          <li><strong>Academic performance:</strong> Minimum CGPA of 7.0 (some programs ask for more).</li>
+          <li><strong>Semester:</strong> You must have completed at least 2 semesters before going abroad.</li>
+          <li><strong>Language:</strong> IELTS 6.0+ / TOEFL 80+ for English programs; basic language skills for other languages.</li>
+          <li><strong>Backlogs:</strong> No pending backlogs (failed subjects).</li>
+          <li><strong>Conduct:</strong> Good disciplinary record at your home university.</li>
+          <li><strong>Passport:</strong> Valid for at least 6 months after the exchange ends.</li>
+          <li><strong>Funds:</strong> Proof that you can pay for travel, stay and living costs.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ===== 4. DOCUMENT CHECKLIST ===== -->
+    <section id="checklist">
+      <h2>Document Checklist</h2>
+      <p>Tick each document once it is ready.</p>
+      <div class="checklist">
+        <label><input type="checkbox" onchange="updateChecklist()"> Valid Passport</label>
+        <label><input type="checkbox" onchange="updateChecklist()"> Academic Transcripts</label>
+        <label><input type="checkbox" onchange="updateChecklist()"> Statement of Purpose (SOP)</label>
+        <label><input type="checkbox" onchange="updateChecklist()"> Letter of Recommendation</label>
+        <label><input type="checkbox" onchange="updateChecklist()"> Language Test Score (IELTS/TOEFL)</label>
+        <label><input type="checkbox" onchange="updateChecklist()"> Passport-size Photographs</label>
+      </div>
+      <p id="checklistResult" class="message">0 of 6 documents completed.</p>
+    </section>
+
+    <!-- ===== 5. SAVED PROGRAMS ===== -->
+    <section id="saved">
+      <h2>Saved Programs</h2>
+      <div id="savedContainer" class="card-container"></div>
+    </section>
+
+    <!-- ===== 6. APPLICATION FORM ===== -->
+    <section id="apply">
+      <h2>Application Form</h2>
+      <form id="applicationForm" onsubmit="return false">
+        <label for="studentName">Full Name</label>
+        <input type="text" id="studentName" placeholder="e.g. Aman Sharma">
+        <span class="error" id="nameError"></span>
+
+        <label for="studentEmail">Email</label>
+        <input type="email" id="studentEmail" placeholder="e.g. aman@example.com">
+        <span class="error" id="emailError"></span>
+
+        <label for="studentId">Student ID (6 to 10 digits)</label>
+        <input type="text" id="studentId" placeholder="e.g. 2024001">
+        <span class="error" id="idError"></span>
+
+        <label for="cgpa">Current CGPA (0 to 10)</label>
+        <input type="number" id="cgpa" step="0.01" placeholder="e.g. 8.2">
+        <span class="error" id="cgpaError"></span>
+
+        <label for="semester">Current Semester</label>
+        <select id="semester">
+          <option value="">-- Select semester --</option>
+          <option value="1">1</option><option value="2">2</option>
+          <option value="3">3</option><option value="4">4</option>
+          <option value="5">5</option><option value="6">6</option>
+        </select>
+        <span class="error" id="semesterError"></span>
+
+        <label for="programSelect">Selected Program</label>
+        <select id="programSelect"></select>
+        <span class="error" id="programError"></span>
+
+        <label for="reason">Why do you want to join this exchange?</label>
+        <textarea id="reason" rows="3"></textarea>
+        <span class="error" id="reasonError"></span>
+
+        <label><input type="checkbox" id="agree"> I confirm that the information above is correct.</label>
+        <span class="error" id="agreeError"></span>
+
+        <button type="button" onclick="submitApplication()">Submit Application</button>
+      </form>
+      <p id="confirmMessage" class="message"></p>
+    </section>
+
+    <!-- ===== 7. APPLICATION STATUS ===== -->
+    <section id="status">
+      <h2>Application Status</h2>
+      <label for="statusFilter">Show: </label>
+      <select id="statusFilter" onchange="showStatus()">
+        <option value="All">All</option>
+        <option value="Submitted">Submitted</option>
+        <option value="Under Review">Under Review</option>
+        <option value="Approved">Approved</option>
+      </select>
+      <br><br>
+      <table>
+        <thead>
+          <tr><th>Student</th><th>Program</th><th>Status</th></tr>
+        </thead>
+        <tbody id="statusTable"></tbody>
+      </table>
+    </section>
+
+    <!-- ===== 8. ADMIN SECTION ===== -->
+    <section id="admin">
+      <h2>Admin: Add a New Program</h2>
+      <form onsubmit="return false">
+        <label for="newUniversity">University Name</label>
+        <input type="text" id="newUniversity">
+        <label for="newCountry">Country</label>
+        <input type="text" id="newCountry">
+        <label for="newDuration">Duration</label>
+        <input type="text" id="newDuration" placeholder="e.g. 1 Semester">
+        <label for="newDeadline">Application Deadline</label>
+        <input type="date" id="newDeadline">
+        <label for="newEligibility">Eligibility</label>
+        <input type="text" id="newEligibility" placeholder="e.g. CGPA 7.5+, IELTS 6.5">
+        <label for="newDescription">Description</label>
+        <textarea id="newDescription" rows="3"></textarea>
+        <button type="button" onclick="addProgram()">Add Program</button>
+      </form>
+      <p id="adminMessage" class="message"></p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Student Exchange Portal | College Project</p>
+  </footer>
+
+  </div> <!-- end of #website -->
+
+  <script>
+    // ================= DATA (arrays of objects) =================
+
+    // List of exchange programs. Each program is an object with properties.
+    var programs = [
+      { id: 1, university: "University of Toronto", country: "Canada", duration: "1 Semester (5 months)",
+        deadline: "2026-12-15", eligibility: "CGPA 7.5+, IELTS 6.5+",
+        description: "Study computer science and engineering in one of Canada's top universities." },
+      { id: 2, university: "Technical University of Munich", country: "Germany", duration: "2 Semesters (10 months)",
+        deadline: "2027-01-10", eligibility: "CGPA 7.0+, basic German or IELTS 6.0",
+        description: "Learn engineering at a leading European technical university with low tuition." },
+      { id: 3, university: "National University of Singapore", country: "Singapore", duration: "1 Semester (5 months)",
+        deadline: "2026-12-30", eligibility: "CGPA 8.0+, IELTS 6.5+",
+        description: "Join a top Asian university with strong research and industry links." },
+      { id: 4, university: "University of Melbourne", country: "Australia", duration: "1 Semester (5 months)",
+        deadline: "2027-02-01", eligibility: "CGPA 7.0+, IELTS 6.5+, 2 semesters completed",
+        description: "Experience student life in Australia with a wide choice of technology subjects." }
+    ];
+
+    var savedPrograms = [];   // ids of programs the student saved
+
+    // Sample application data for the status section
+    var applications = [
+      { student: "Riya Verma",   program: "University of Toronto",          status: "Approved" },
+      { student: "Karan Singh",  program: "Technical University of Munich", status: "Under Review" },
+      { student: "Neha Gupta",   program: "National University of Singapore", status: "Submitted" },
+      { student: "Arjun Mehta",  program: "University of Melbourne",        status: "Under Review" }
+    ];
+
+    // ================= LOGIN =================
+
+    // Runs when the Login button is clicked
+    function login() {
+      var name = document.getElementById("loginName").value.trim();
+      var email = document.getElementById("loginEmail").value.trim();
+      var password = document.getElementById("loginPassword").value;
+      var isValid = true;
+
+      // Clear old error messages
+      document.getElementById("loginNameError").innerHTML = "";
+      document.getElementById("loginEmailError").innerHTML = "";
+      document.getElementById("loginPasswordError").innerHTML = "";
+
+      if (name.length < 3) {
+        document.getElementById("loginNameError").innerHTML = "Enter your full name (at least 3 characters).";
+        isValid = false;
+      }
+      if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+        document.getElementById("loginEmailError").innerHTML = "Enter a valid email address.";
+        isValid = false;
+      }
+      if (password.length < 6) {
+        document.getElementById("loginPasswordError").innerHTML = "Password must be at least 6 characters.";
+        isValid = false;
+      }
+
+      // If everything is correct: hide the login page and show the website
+      if (isValid) {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("website").style.display = "block";
+        window.scrollTo(0, 0);
+      }
+      return false;                                    // stop the page from reloading
+    }
+
+    // ================= EXCHANGE PROGRAMS =================
+
+    // Builds one card for each program and shows it on the page
+    function showPrograms() {
+      var container = document.getElementById("programContainer");
+      var html = "";                                   // we build the HTML text here
+
+      for (var i = 0; i < programs.length; i++) {      // loop through all programs
+        var p = programs[i];
+
+        // If the program is already saved, show a disabled "Saved" button
+        var buttonHtml = '<button onclick="saveProgram(' + p.id + ')">Save Program</button>';
+        if (savedPrograms.includes(p.id)) {
+          buttonHtml = '<button class="saved-button" disabled>&#10003; Saved</button>';
+        }
+
+        html += '<div class="card">' +
+                  '<h3>' + p.university + '</h3>' +
+                  '<p class="country">' + p.country + '</p>' +
+                  '<p><strong>Duration:</strong> ' + p.duration + '</p>' +
+                  '<p><strong>Deadline:</strong> ' + p.deadline + '</p>' +
+                  '<p><strong>Eligibility:</strong> ' + p.eligibility + '</p>' +
+                  '<p>' + p.description + '</p>' +
+                  buttonHtml +
+                '</div>';
+      }
+      container.innerHTML = html;                      // put the cards inside the page
+    }
+
+    // Fills the dropdown in the application form with program names
+    function fillProgramDropdown() {
+      var dropdown = document.getElementById("programSelect");
+      var options = '<option value="">-- Select a program --</option>';
+      for (var i = 0; i < programs.length; i++) {
+        options += '<option value="' + programs[i].university + '">' +
+                   programs[i].university + ' (' + programs[i].country + ')</option>';
+      }
+      dropdown.innerHTML = options;
+    }
+
+    // ================= CHECKLIST =================
+
+    // Counts ticked checkboxes and shows the result
+    function updateChecklist() {
+      var boxes = document.querySelectorAll("#checklist input[type='checkbox']");
+      var done = 0;
+      for (var i = 0; i < boxes.length; i++) {
+        if (boxes[i].checked) {
+          done++;
+        }
+      }
+      var text = done + " of " + boxes.length + " documents completed.";
+      if (done == boxes.length) {
+        text += " You are ready to apply!";
+      }
+      document.getElementById("checklistResult").innerHTML = text;
+    }
+
+    // ================= SAVED PROGRAMS =================
+
+    // Adds a program to the saved list (if not already saved)
+    function saveProgram(programId) {
+      if (savedPrograms.includes(programId)) {
+        alert("This program is already saved.");
+        return;
+      }
+      savedPrograms.push(programId);
+      showPrograms();          // redraw cards so the button changes to "Saved"
+      showSavedPrograms();
+    }
+
+    // Removes a program from the saved list
+    function removeProgram(programId) {
+      var newList = [];
+      for (var i = 0; i < savedPrograms.length; i++) {
+        if (savedPrograms[i] != programId) {           // keep all except the removed one
+          newList.push(savedPrograms[i]);
+        }
+      }
+      savedPrograms = newList;
+      showPrograms();          // button goes back to "Save Program"
+      showSavedPrograms();
+    }
+
+    // Displays all saved programs as cards
+    function showSavedPrograms() {
+      var container = document.getElementById("savedContainer");
+
+      if (savedPrograms.length == 0) {
+        container.innerHTML = "<p>No saved programs yet. Save one from the Exchange Programs section.</p>";
+        return;
+      }
+
+      var html = "";
+      for (var i = 0; i < programs.length; i++) {
+        var p = programs[i];
+        if (savedPrograms.includes(p.id)) {            // show only saved ones
+          html += '<div class="card">' +
+                    '<h3>' + p.university + '</h3>' +
+                    '<p class="country">' + p.country + '</p>' +
+                    '<p><strong>Duration:</strong> ' + p.duration + '</p>' +
+                    '<p><strong>Deadline:</strong> ' + p.deadline + '</p>' +
+                    '<button class="remove-button" onclick="removeProgram(' + p.id + ')">Remove</button>' +
+                  '</div>';
+        }
+      }
+      container.innerHTML = html;
+    }
+
+    // ================= APPLICATION FORM =================
+
+    // Shows an error message under a field
+    function showError(errorId, message) {
+      document.getElementById(errorId).innerHTML = message;
+    }
+
+    // Runs when the form is submitted. Returns false so the page does not reload.
+    function submitApplication() {
+      var name = document.getElementById("studentName").value.trim();
+      var email = document.getElementById("studentEmail").value.trim();
+      var studentId = document.getElementById("studentId").value.trim();
+      var cgpa = document.getElementById("cgpa").value;
+      var semester = document.getElementById("semester").value;
+      var program = document.getElementById("programSelect").value;
+      var reason = document.getElementById("reason").value.trim();
+      var agreed = document.getElementById("agree").checked;
+
+      var isValid = true;                              // becomes false if any check fails
+
+      // Clear old messages first
+      var errorIds = ["nameError", "emailError", "idError", "cgpaError", "semesterError", "programError", "reasonError", "agreeError"];
+      for (var i = 0; i < errorIds.length; i++) {
+        showError(errorIds[i], "");
+      }
+      document.getElementById("confirmMessage").innerHTML = "";
+
+      // Check each field
+      if (name.length < 3) {
+        showError("nameError", "Please enter your full name (at least 3 characters).");
+        isValid = false;
+      }
+      if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+        showError("emailError", "Please enter a valid email address.");
+        isValid = false;
+      }
+      if (isNaN(studentId) || studentId.length < 6 || studentId.length > 10) {
+        showError("idError", "Student ID must be 6 to 10 digits.");
+        isValid = false;
+      }
+      if (cgpa === "" || cgpa < 0 || cgpa > 10) {
+        showError("cgpaError", "Enter a CGPA between 0 and 10.");
+        isValid = false;
+      } else if (cgpa < 7) {
+        showError("cgpaError", "A minimum CGPA of 7.0 is required.");
+        isValid = false;
+      }
+      if (semester === "") {
+        showError("semesterError", "Please select your semester.");
+        isValid = false;
+      } else if (semester < 2) {
+        showError("semesterError", "You must complete at least 2 semesters.");
+        isValid = false;
+      }
+      if (program === "") {
+        showError("programError", "Please select a program.");
+        isValid = false;
+      }
+      if (reason.length < 10) {
+        showError("reasonError", "Please write at least 10 characters.");
+        isValid = false;
+      }
+      if (agreed == false) {
+        showError("agreeError", "Please tick the confirmation box.");
+        isValid = false;
+      }
+
+      // If everything is correct, save the application and show confirmation
+      if (isValid) {
+        applications.push({ student: name, program: program, status: "Submitted" });
+        showStatus();
+        document.getElementById("confirmMessage").innerHTML =
+          "Thank you, " + name + "! Your application for " + program + " has been submitted.";
+        document.getElementById("applicationForm").reset();
+      }
+      return false;                                    // stop the page from reloading
+    }
+
+    // ================= APPLICATION STATUS =================
+
+    // Shows applications in a table, filtered by the dropdown choice
+    function showStatus() {
+      var filter = document.getElementById("statusFilter").value;
+      var rows = "";
+
+      for (var i = 0; i < applications.length; i++) {
+        var a = applications[i];
+        if (filter == "All" || filter == a.status) {
+          var cssClass = a.status.replace(" ", "");    // "Under Review" -> "UnderReview"
+          rows += "<tr><td>" + a.student + "</td><td>" + a.program + "</td>" +
+                  '<td><span class="badge ' + cssClass + '">' + a.status + "</span></td></tr>";
+        }
+      }
+      if (rows == "") {
+        rows = '<tr><td colspan="3">No applications with this status.</td></tr>';
+      }
+      document.getElementById("statusTable").innerHTML = rows;
+    }
+
+    // ================= ADMIN SECTION =================
+
+    // Adds a new program entered by the administrator
+    function addProgram() {
+      var university = document.getElementById("newUniversity").value.trim();
+      var country = document.getElementById("newCountry").value.trim();
+      var duration = document.getElementById("newDuration").value.trim();
+      var deadline = document.getElementById("newDeadline").value;
+      var eligibility = document.getElementById("newEligibility").value.trim();
+      var description = document.getElementById("newDescription").value.trim();
+      var message = document.getElementById("adminMessage");
+
+      // Make sure no field is empty
+      if (university == "" || country == "" || duration == "" || deadline == "" || eligibility == "" || description == "") {
+        message.style.color = "#b91c1c";
+        message.innerHTML = "Please fill in all the fields.";
+        return false;
+      }
+
+      // Create the new program with the next id number
+      var newProgram = {
+        id: programs.length + 1,
+        university: university,
+        country: country,
+        duration: duration,
+        deadline: deadline,
+        eligibility: eligibility,
+        description: description
+      };
+      programs.push(newProgram);
+
+      // Refresh the page parts that use the programs list
+      showPrograms();
+      fillProgramDropdown();
+
+      message.style.color = "#0F766E";
+      message.innerHTML = newProgram.university + " was added. See it in the Exchange Programs section.";
+      document.getElementById("newUniversity").form.reset();
+      return false;
+    }
+
+    // ================= START: runs when the page opens =================
+    showPrograms();
+    fillProgramDropdown();
+    showSavedPrograms();
+    showStatus();
+  </script>
+
+</body>
+</html>
