@@ -6,23 +6,20 @@
   <title>Student Exchange Portal</title>
 
   <style>
-    /* ---------- Basic page setup ---------- */
-    * { box-sizing: border-box; }               /* padding/border stay inside the width */
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background-color: #F8FAFC;                /* dominant: alabaster off-white */
-      color: #0F172A;                           /* charcoal ink text */
+      background-color: #F8FAFC;                
+      color: #0F172A;                          
       line-height: 1.6;
     }
     h1, h2, h3 { color: #172554; margin-top: 0; }
 
-    /* ---------- Header and navigation ---------- */
     header {
-      background-color: #1E3A8A;                /* blue */
+      background-color: #1E3A8A;                
       color: white;
       padding: 12px 20px;
-      position: sticky;                         /* stays at top while scrolling */
+      position: sticky;                        
       top: 0;
     }
     header .logo { font-size: 22px; font-weight: bold; }
@@ -30,8 +27,8 @@
       list-style: none;
       margin: 8px 0 0 0;
       padding: 0;
-      display: flex;                            /* puts links in a row */
-      flex-wrap: wrap;                          /* wraps on small screens */
+      display: flex;                          
+      flex-wrap: wrap;                         
       gap: 6px;
     }
     nav a {
@@ -43,7 +40,7 @@
     }
     nav a:hover { background-color: #172554; }
 
-    /* ---------- Sections ---------- */
+    
     main { max-width: 1000px; margin: 0 auto; padding: 20px; }
     section {
       background-color: #F8FAFC;
@@ -61,9 +58,8 @@
     #home h1, #home h2 { color: white; font-size: 36px; }
     #home p { max-width: 600px; margin: 0 auto 20px auto; }
 
-    /* ---------- Buttons ---------- */
     button, .button-link {
-      background-color: #F97316;                /* accent: sunset orange (primary buttons only) */
+      background-color: #F97316;                
       color: #0F172A;
       font-weight: bold;
       border: none;
@@ -77,12 +73,12 @@
     button:hover, .button-link:hover { background-color: #EA580C; }
         .remove-button { background-color: #1E3A8A; color: white; }
     .remove-button:hover { background-color: #172554; }
-    .saved-button, .saved-button:hover { background-color: #0F766E; color: white; cursor: default; }  /* green "Saved" state */
+    .saved-button, .saved-button:hover { background-color: #0F766E; color: white; cursor: default; } 
 
-    /* ---------- Program cards ---------- */
+   
     .card-container { display: flex; flex-wrap: wrap; gap: 20px; }
     .card {
-      flex: 1 1 280px;                          /* grow, shrink, start at 280px */
+      flex: 1 1 280px;                        
       background-color: white;
       border: 1px solid #E2E8F0;
       border-top: 5px solid #1E3A8A;
@@ -93,7 +89,7 @@
     .country { color: #475569; font-weight: bold; margin: 0 0 8px 0; }
     .card button { margin-top: 8px; }
 
-    /* ---------- Lists, forms, tables ---------- */
+
     ul.plain-list li { margin-bottom: 6px; }
     .checklist label { display: block; padding: 8px; background-color: white; border: 1px solid #E2E8F0; margin-bottom: 6px; border-radius: 4px; }
     form label { display: block; margin-top: 12px; font-weight: bold; }
@@ -113,16 +109,16 @@
     th, td { padding: 10px; border: 1px solid #E2E8F0; text-align: left; }
     th { background-color: #1E3A8A; color: white; }
 
-    /* Status badges */
+
     .badge { padding: 3px 10px; border-radius: 12px; font-size: 13px; font-weight: bold; }
     .Submitted { background-color: #E0E7FF; color: #1E3A8A; }
     .UnderReview { background-color: #E2E8F0; color: #334155; }
     .Approved { background-color: #CCFBF1; color: #0F766E; }
 
-    /* ---------- Login page ---------- */
+    
     #loginPage {
       min-height: 100vh;
-      display: flex;                            /* centres the login box */
+      display: flex;                            
       justify-content: center;
       align-items: center;
       padding: 20px;
@@ -145,11 +141,11 @@
       border-radius: 4px;
       font-size: 15px;
     }
-    #website { display: none; }                 /* hidden until the student logs in */
+    #website { display: none; }                 
 
     footer { background-color: #172554; color: white; text-align: center; padding: 15px; }
 
-    /* ---------- Responsive: smaller screens ---------- */
+    
     @media (max-width: 600px) {
       #home h1, #home h2 { font-size: 26px; }
       section { padding: 15px; }
@@ -160,7 +156,7 @@
 
 <body>
 
-  <!-- ===== LOGIN PAGE (shown first) ===== -->
+ 
   <div id="loginPage">
     <div class="login-box">
       <h1>Student Exchange Portal Login</h1>
@@ -183,10 +179,10 @@
     </div>
   </div>
 
-  <!-- ===== THE WEBSITE (hidden until login) ===== -->
+
   <div id="website">
 
-  <!-- ===== HEADER with NAVIGATION BAR ===== -->
+  
   <header>
     <div class="logo">Student Exchange Portal</div>
     <nav>
@@ -205,7 +201,7 @@
 
   <main>
 
-    <!-- ===== 1. HOME ===== -->
+   
     <section id="home">
       <h1>Welcome to the Student Exchange Portal</h1>
       <p>
@@ -215,14 +211,14 @@
       <a href="#programs" class="button-link">Explore Exchange Programs</a>
     </section>
 
-    <!-- ===== 2. EXCHANGE PROGRAMS (cards are created by JavaScript) ===== -->
+    
     <section id="programs">
       <h2>Exchange Programs</h2>
       <p>Click "Save Program" on any card to add it to your favourites.</p>
       <div id="programContainer" class="card-container"></div>
     </section>
 
-    <!-- ===== 3. ELIGIBILITY ===== -->
+    
     <section id="eligibility">
       <h2>Eligibility and Requirements</h2>
       <article>
@@ -239,7 +235,7 @@
       </article>
     </section>
 
-    <!-- ===== 4. DOCUMENT CHECKLIST ===== -->
+    
     <section id="checklist">
       <h2>Document Checklist</h2>
       <p>Tick each document once it is ready.</p>
@@ -254,13 +250,13 @@
       <p id="checklistResult" class="message">0 of 6 documents completed.</p>
     </section>
 
-    <!-- ===== 5. SAVED PROGRAMS ===== -->
+    
     <section id="saved">
       <h2>Saved Programs</h2>
       <div id="savedContainer" class="card-container"></div>
     </section>
 
-    <!-- ===== 6. APPLICATION FORM ===== -->
+    
     <section id="apply">
       <h2>Application Form</h2>
       <form id="applicationForm" onsubmit="return false">
@@ -305,7 +301,7 @@
       <p id="confirmMessage" class="message"></p>
     </section>
 
-    <!-- ===== 7. APPLICATION STATUS ===== -->
+  
     <section id="status">
       <h2>Application Status</h2>
       <label for="statusFilter">Show: </label>
@@ -324,7 +320,7 @@
       </table>
     </section>
 
-    <!-- ===== 8. ADMIN SECTION ===== -->
+   
     <section id="admin">
       <h2>Admin: Add a New Program</h2>
       <form onsubmit="return false">
@@ -351,10 +347,10 @@
     <p>&copy; 2026 Student Exchange Portal | College Project</p>
   </footer>
 
-  </div> <!-- end of #website -->
+  </div> 
 
   <script>
-    // ================= DATA (arrays of objects) =================
+   
 
     // List of exchange programs. Each program is an object with properties.
     var programs = [
@@ -372,9 +368,9 @@
         description: "Experience student life in Australia with a wide choice of technology subjects." }
     ];
 
-    var savedPrograms = [];   // ids of programs the student saved
+    var savedPrograms = [];  
 
-    // Sample application data for the status section
+  
     var applications = [
       { student: "Riya Verma",   program: "University of Toronto",          status: "Approved" },
       { student: "Karan Singh",  program: "Technical University of Munich", status: "Under Review" },
@@ -382,16 +378,16 @@
       { student: "Arjun Mehta",  program: "University of Melbourne",        status: "Under Review" }
     ];
 
-    // ================= LOGIN =================
+   
 
-    // Runs when the Login button is clicked
+   
     function login() {
       var name = document.getElementById("loginName").value.trim();
       var email = document.getElementById("loginEmail").value.trim();
       var password = document.getElementById("loginPassword").value;
       var isValid = true;
 
-      // Clear old error messages
+    
       document.getElementById("loginNameError").innerHTML = "";
       document.getElementById("loginEmailError").innerHTML = "";
       document.getElementById("loginPasswordError").innerHTML = "";
@@ -409,26 +405,25 @@
         isValid = false;
       }
 
-      // If everything is correct: hide the login page and show the website
+     
       if (isValid) {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("website").style.display = "block";
         window.scrollTo(0, 0);
       }
-      return false;                                    // stop the page from reloading
+      return false;                                    
     }
 
-    // ================= EXCHANGE PROGRAMS =================
+   
 
-    // Builds one card for each program and shows it on the page
     function showPrograms() {
       var container = document.getElementById("programContainer");
-      var html = "";                                   // we build the HTML text here
+      var html = "";                                  
 
-      for (var i = 0; i < programs.length; i++) {      // loop through all programs
+      for (var i = 0; i < programs.length; i++) {    
         var p = programs[i];
 
-        // If the program is already saved, show a disabled "Saved" button
+       
         var buttonHtml = '<button onclick="saveProgram(' + p.id + ')">Save Program</button>';
         if (savedPrograms.includes(p.id)) {
           buttonHtml = '<button class="saved-button" disabled>&#10003; Saved</button>';
@@ -444,10 +439,10 @@
                   buttonHtml +
                 '</div>';
       }
-      container.innerHTML = html;                      // put the cards inside the page
+      container.innerHTML = html;                    
     }
 
-    // Fills the dropdown in the application form with program names
+ 
     function fillProgramDropdown() {
       var dropdown = document.getElementById("programSelect");
       var options = '<option value="">-- Select a program --</option>';
@@ -458,9 +453,7 @@
       dropdown.innerHTML = options;
     }
 
-    // ================= CHECKLIST =================
-
-    // Counts ticked checkboxes and shows the result
+   
     function updateChecklist() {
       var boxes = document.querySelectorAll("#checklist input[type='checkbox']");
       var done = 0;
@@ -476,33 +469,31 @@
       document.getElementById("checklistResult").innerHTML = text;
     }
 
-    // ================= SAVED PROGRAMS =================
-
-    // Adds a program to the saved list (if not already saved)
+   
     function saveProgram(programId) {
       if (savedPrograms.includes(programId)) {
         alert("This program is already saved.");
         return;
       }
       savedPrograms.push(programId);
-      showPrograms();          // redraw cards so the button changes to "Saved"
+      showPrograms();         
       showSavedPrograms();
     }
 
-    // Removes a program from the saved list
+
     function removeProgram(programId) {
       var newList = [];
       for (var i = 0; i < savedPrograms.length; i++) {
-        if (savedPrograms[i] != programId) {           // keep all except the removed one
+        if (savedPrograms[i] != programId) {          
           newList.push(savedPrograms[i]);
         }
       }
       savedPrograms = newList;
-      showPrograms();          // button goes back to "Save Program"
+      showPrograms();       
       showSavedPrograms();
     }
 
-    // Displays all saved programs as cards
+   
     function showSavedPrograms() {
       var container = document.getElementById("savedContainer");
 
@@ -514,7 +505,7 @@
       var html = "";
       for (var i = 0; i < programs.length; i++) {
         var p = programs[i];
-        if (savedPrograms.includes(p.id)) {            // show only saved ones
+        if (savedPrograms.includes(p.id)) {            
           html += '<div class="card">' +
                     '<h3>' + p.university + '</h3>' +
                     '<p class="country">' + p.country + '</p>' +
@@ -527,14 +518,12 @@
       container.innerHTML = html;
     }
 
-    // ================= APPLICATION FORM =================
-
-    // Shows an error message under a field
+   
     function showError(errorId, message) {
       document.getElementById(errorId).innerHTML = message;
     }
 
-    // Runs when the form is submitted. Returns false so the page does not reload.
+
     function submitApplication() {
       var name = document.getElementById("studentName").value.trim();
       var email = document.getElementById("studentEmail").value.trim();
@@ -545,16 +534,15 @@
       var reason = document.getElementById("reason").value.trim();
       var agreed = document.getElementById("agree").checked;
 
-      var isValid = true;                              // becomes false if any check fails
+      var isValid = true;                   
 
-      // Clear old messages first
+      
       var errorIds = ["nameError", "emailError", "idError", "cgpaError", "semesterError", "programError", "reasonError", "agreeError"];
       for (var i = 0; i < errorIds.length; i++) {
         showError(errorIds[i], "");
       }
       document.getElementById("confirmMessage").innerHTML = "";
 
-      // Check each field
       if (name.length < 3) {
         showError("nameError", "Please enter your full name (at least 3 characters).");
         isValid = false;
@@ -594,7 +582,7 @@
         isValid = false;
       }
 
-      // If everything is correct, save the application and show confirmation
+     
       if (isValid) {
         applications.push({ student: name, program: program, status: "Submitted" });
         showStatus();
@@ -602,12 +590,11 @@
           "Thank you, " + name + "! Your application for " + program + " has been submitted.";
         document.getElementById("applicationForm").reset();
       }
-      return false;                                    // stop the page from reloading
+      return false;                                   
     }
 
-    // ================= APPLICATION STATUS =================
 
-    // Shows applications in a table, filtered by the dropdown choice
+
     function showStatus() {
       var filter = document.getElementById("statusFilter").value;
       var rows = "";
@@ -615,7 +602,7 @@
       for (var i = 0; i < applications.length; i++) {
         var a = applications[i];
         if (filter == "All" || filter == a.status) {
-          var cssClass = a.status.replace(" ", "");    // "Under Review" -> "UnderReview"
+          var cssClass = a.status.replace(" ", "");   
           rows += "<tr><td>" + a.student + "</td><td>" + a.program + "</td>" +
                   '<td><span class="badge ' + cssClass + '">' + a.status + "</span></td></tr>";
         }
@@ -626,9 +613,8 @@
       document.getElementById("statusTable").innerHTML = rows;
     }
 
-    // ================= ADMIN SECTION =================
 
-    // Adds a new program entered by the administrator
+   
     function addProgram() {
       var university = document.getElementById("newUniversity").value.trim();
       var country = document.getElementById("newCountry").value.trim();
@@ -638,14 +624,14 @@
       var description = document.getElementById("newDescription").value.trim();
       var message = document.getElementById("adminMessage");
 
-      // Make sure no field is empty
+
       if (university == "" || country == "" || duration == "" || deadline == "" || eligibility == "" || description == "") {
         message.style.color = "#b91c1c";
         message.innerHTML = "Please fill in all the fields.";
         return false;
       }
 
-      // Create the new program with the next id number
+      
       var newProgram = {
         id: programs.length + 1,
         university: university,
@@ -657,7 +643,6 @@
       };
       programs.push(newProgram);
 
-      // Refresh the page parts that use the programs list
       showPrograms();
       fillProgramDropdown();
 
@@ -667,7 +652,7 @@
       return false;
     }
 
-    // ================= START: runs when the page opens =================
+   
     showPrograms();
     fillProgramDropdown();
     showSavedPrograms();
